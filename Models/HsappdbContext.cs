@@ -24,7 +24,7 @@ namespace homeschool_api.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseNpgsql("");
+                optionsBuilder.UseNpgsql("ConnectionString");
             }
         }
 
