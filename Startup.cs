@@ -27,7 +27,7 @@ namespace homeschool_api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<d90169mkp6oi7oContext>(options =>
+            services.AddDbContext<HSAppDbContext>(options =>
                 options.UseNpgsql(Configuration["ConnectionString"]));
         }
     }

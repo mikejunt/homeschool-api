@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace homeschool_api.Models
 {
-    public partial class d90169mkp6oi7oContext : DbContext
+    public partial class HSAppDbContext : DbContext
     {
-        public d90169mkp6oi7oContext()
+        public HSAppDbContext()
         {
         }
 
-        public d90169mkp6oi7oContext(DbContextOptions<d90169mkp6oi7oContext> options)
+        public HSAppDbContext(DbContextOptions<HSAppDbContext> options)
             : base(options)
         {
         }
