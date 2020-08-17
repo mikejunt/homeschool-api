@@ -26,4 +26,16 @@ namespace homeschool_api.Models
         public virtual ICollection<Tasks> TasksAuthor { get; set; }
         public virtual ICollection<UserToFamily> UserToFamily { get; set; }
     }
+
+    public partial class FamilyUserData
+    {
+        public int Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Photo { get; set; }
+        public int FamilyId { get; set; }
+        public int Role { get; set; }
+        public bool Confirmed { get; set; }
+    }
 }
+

@@ -28,25 +28,60 @@ namespace homeschool_api.Controllers
             return await _context.Users.ToListAsync();
         }
 
-        // GET: api/Users/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Users>> GetUsers(int id)
+        // GET: api/users/email/mikejunt@gmail.com
+        [HttpGet("email/{email}")]
+        public async Task<ActionResult<IEnumerable<Users>>> GetUserByEmail(string email)
         {
-            var users = await _context.Users.FindAsync(id);
-
-            if (users == null)
-            {
-                return NotFound();
-            }
-
-            return users;
+            var query = await _context.Users
+            .Where(
+            obj => obj.Email == email)
+            .ToListAsync();
+            return query;
         }
 
-        // PUT: api/Users/5
+        // GET: api/users/family
+        [HttpGet("family")]
+        public async Task<ActionResult<IEnumerable<FamilyUserData>>> GetFamilyMembers ()
+        {
+            var query = await _context.Users
+            .Join(_context.UserToFamily,
+            user => user.Id,
+            relation => relation.UserId,
+            (user, relation) => (new FamilyUserData {
+                    Id = user.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Photo = user.Photo,
+                    FamilyId = relation.FamilyId,
+                    Role = relation.Role,
+                    Confirmed = relation.Confirmed
+            }))
+            // .Where(
+            // obj => obj.Season == season 
+            //     && obj.Ip > ip
+            //     && (team == null || obj.TeamId == team))
+            .OrderBy(obj => obj.Role)
+            .OrderBy(obj => obj.FamilyId)
+            .ToListAsync();
+            return query;
+        }
+
+                // GET: api/users/minors/mikejunt@gmail.com
+        [HttpGet("minors/{email}")]
+        public async Task<ActionResult<IEnumerable<Users>>> GetMinorsByEmail(string email)
+        {
+            var query = await _context.Users
+            .Where(
+            obj => obj.ParentEmail == email && obj.Minor == true)
+            .ToListAsync();
+            return query;
+        }
+
+        // PUT: api/users/update/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUsers(int id, Users users)
+        [HttpPut("update/{id}")]
+        public async Task<IActionResult> UpdateUser(int id, Users users)
         {
             if (id != users.Id)
             {
@@ -74,11 +109,11 @@ namespace homeschool_api.Controllers
             return NoContent();
         }
 
-        // POST: api/Users
+        // POST: api/users/new
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
-        public async Task<ActionResult<Users>> PostUsers(Users users)
+        [HttpPost("new")]
+        public async Task<ActionResult<Users>> CreateUser(Users users)
         {
             _context.Users.Add(users);
             await _context.SaveChangesAsync();
@@ -86,8 +121,8 @@ namespace homeschool_api.Controllers
             return CreatedAtAction("GetUsers", new { id = users.Id }, users);
         }
 
-        // DELETE: api/Users/5
-        [HttpDelete("{id}")]
+        // DELETE: api/users/delete/5
+        [HttpDelete("delete/{id}")]
         public async Task<ActionResult<Users>> DeleteUsers(int id)
         {
             var users = await _context.Users.FindAsync(id);
