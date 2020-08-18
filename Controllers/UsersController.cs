@@ -39,34 +39,36 @@ namespace homeschool_api.Controllers
             return query;
         }
 
-        // GET: api/users/family
+        // GET: api/users/family?uid=x&fids=y&fids=z
         [HttpGet("family")]
-        public async Task<ActionResult<IEnumerable<FamilyUserData>>> GetFamilyMembers ()
+        public async Task<ActionResult<IEnumerable<FamilyUserData>>> GetFamilyMembers([FromQuery] int uid, [FromQuery] int[] fids)
         {
-            var query = await _context.Users
-            .Join(_context.UserToFamily,
-            user => user.Id,
+            Console.WriteLine(uid);
+            Console.WriteLine(fids);
+            var query = await _context.UserToFamily
+            .Join(_context.Users,
             relation => relation.UserId,
-            (user, relation) => (new FamilyUserData {
-                    Id = user.Id,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Photo = user.Photo,
-                    FamilyId = relation.FamilyId,
-                    Role = relation.Role,
-                    Confirmed = relation.Confirmed
+                        user => user.Id,
+            (relation, user) => (new FamilyUserData
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Photo = user.Photo,
+                FamilyId = relation.FamilyId,
+                Role = relation.Role,
+                Confirmed = relation.Confirmed
             }))
-            // .Where(
-            // obj => obj.Season == season 
-            //     && obj.Ip > ip
-            //     && (team == null || obj.TeamId == team))
+            .Where(
+            obj => fids.Contains(obj.FamilyId)
+                && obj.Id != uid)
             .OrderBy(obj => obj.Role)
             .OrderBy(obj => obj.FamilyId)
             .ToListAsync();
             return query;
         }
 
-                // GET: api/users/minors/mikejunt@gmail.com
+        // GET: api/users/minors/mikejunt@gmail.com
         [HttpGet("minors/{email}")]
         public async Task<ActionResult<IEnumerable<Users>>> GetMinorsByEmail(string email)
         {
