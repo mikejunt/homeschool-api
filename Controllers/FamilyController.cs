@@ -29,26 +29,31 @@ namespace homeschool_api.Controllers
 
         // GET: api/family/user/5
         [HttpGet("user/{id}")]
-        public async Task<ActionResult<IEnumerable<FamilyMembership>>> GetFamily(int id)
+        public async Task<ActionResult<IEnumerable<FamilyMembership>>> GetFamilyForUser(int id)
         {
             var query = await _context.Family
                         .Join(_context.UserToFamily,
-                            family => Family.Id,
+                            families => families.Id,
                             relation => relation.FamilyId,
-                        (family, relation) => (new FamilyMembership
+                        (families, relation) => (new FamilyMembership
                         {
-                            Id = family.Id,
-                            AdminId = family.AdminId,
-                            Name = family.name,
+                            FamilyId = families.Id,
+                            AdminId = families.AdminId,
+                            Name = families.Name,
                             RelationId = relation.Id,
                             UserId = relation.UserId,
                             Role = relation.Role,
                             Confirmed = relation.Confirmed
                         }))
                         .Where(
-                        obj => obj.UserId = id)
+                        obj => obj.UserId == id)
                         .OrderBy(obj => obj.Role)
                         .ToListAsync();
+
+            if (query.Count() == 0)
+            {
+                return NotFound();
+            }
             return query;
         }
 
