@@ -9,7 +9,7 @@ using homeschool_api.Models;
 
 namespace homeschool_api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/relations")]
     [ApiController]
     public class UserFamilyController : ControllerBase
     {
@@ -27,18 +27,20 @@ namespace homeschool_api.Controllers
             return await _context.UserToFamily.ToListAsync();
         }
 
-        // GET: api/UserFamily/5
+        // GET: api/relations/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserToFamily>> GetUserToFamily(int id)
+        public async Task<ActionResult<IEnumerable<UserToFamily>>> GetUserRelations(int id)
         {
-            var userToFamily = await _context.UserToFamily.FindAsync(id);
+            var query = await _context.UserToFamily
+            .Where(obj => obj.UserId == id)
+            .ToListAsync();
 
-            if (userToFamily == null)
+            if (query == null)
             {
                 return NotFound();
             }
 
-            return userToFamily;
+            return query;
         }
 
         // PUT: api/UserFamily/5

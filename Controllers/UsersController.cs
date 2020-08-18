@@ -43,8 +43,6 @@ namespace homeschool_api.Controllers
         [HttpGet("family")]
         public async Task<ActionResult<IEnumerable<FamilyUserData>>> GetFamilyMembers([FromQuery] int uid, [FromQuery] int[] fids)
         {
-            Console.WriteLine(uid);
-            Console.WriteLine(fids);
             var query = await _context.UserToFamily
             .Join(_context.Users,
             relation => relation.UserId,

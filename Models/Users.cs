@@ -37,5 +37,6 @@ namespace homeschool_api.Models
         public int Role { get; set; }
         public bool Confirmed { get; set; }
     }
+    
 }
 
