@@ -22,11 +22,23 @@ namespace homeschool_api
             Configuration = configuration;
         }
 
+        readonly string MyAllowSpecificOrigins = "_AllowedOrigins";
+
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins, builder =>
+                {
+                    builder.AllowAnyHeader()
+                           .AllowAnyMethod()
+                           .AllowAnyOrigin();
+                    //    .WithOrigins("allowed cors here");
+                });
+            });
             services.AddControllers();
             services.AddDbContext<HSAppDbContext>(options =>
                 options.UseNpgsql(Configuration["ConnectionString"]));
@@ -43,6 +55,8 @@ namespace homeschool_api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseAuthorization();
 
