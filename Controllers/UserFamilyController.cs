@@ -35,7 +35,7 @@ namespace homeschool_api.Controllers
             .Where(obj => obj.UserId == id)
             .ToListAsync();
 
-            if (query == null)
+            if (query.Count() == 0)
             {
                 return NotFound();
             }
