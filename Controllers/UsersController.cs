@@ -39,9 +39,9 @@ namespace homeschool_api.Controllers
             return query;
         }
 
-        // GET: api/users/family?uid=x&fids=y&fids=z
+        // GET: api/users/family?fids=y&fids=z
         [HttpGet("family")]
-        public async Task<ActionResult<IEnumerable<FamilyUserData>>> GetFamilyMembers([FromQuery] int uid, [FromQuery] int[] fids)
+        public async Task<ActionResult<IEnumerable<FamilyUserData>>> GetFamilyMembers([FromQuery] int[] fids)
         {
             var query = await _context.UserToFamily
             .Join(_context.Users,
@@ -58,8 +58,7 @@ namespace homeschool_api.Controllers
                 Confirmed = relation.Confirmed
             }))
             .Where(
-            obj => fids.Contains(obj.FamilyId)
-                && obj.Id != uid)
+            obj => fids.Contains(obj.FamilyId))
             .OrderBy(obj => obj.Role)
             .OrderBy(obj => obj.FamilyId)
             .ToListAsync();
