@@ -57,7 +57,8 @@ namespace homeschool_api.Controllers
             return query;
         }
 
-                [HttpGet("minors?uids=1&uids=2")]
+        // GET: api/family/minors?uids=1&uids=2
+                [HttpGet("minors")]
         public async Task<ActionResult<IEnumerable<FamilyMembership>>> GetFamilyForMinors([FromQuery] int[] uids)
         {
             var query = await _context.Family
