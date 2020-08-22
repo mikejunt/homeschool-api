@@ -57,6 +57,35 @@ namespace homeschool_api.Controllers
             return query;
         }
 
+                [HttpGet("minors?uids=1&uids=2")]
+        public async Task<ActionResult<IEnumerable<FamilyMembership>>> GetFamilyForMinors([FromQuery] int[] uids)
+        {
+            var query = await _context.Family
+                        .Join(_context.UserToFamily,
+                            families => families.Id,
+                            relation => relation.FamilyId,
+                        (families, relation) => (new FamilyMembership
+                        {
+                            FamilyId = families.Id,
+                            AdminId = families.AdminId,
+                            Name = families.Name,
+                            RelationId = relation.Id,
+                            UserId = relation.UserId,
+                            Role = relation.Role,
+                            Confirmed = relation.Confirmed
+                        }))
+                        .Where(
+                        obj => uids.Contains(obj.UserId))
+                        .OrderBy(obj => obj.UserId)
+                        .ToListAsync();
+
+            if (query.Count() == 0)
+            {
+                return NotFound();
+            }
+            return query;
+        }
+
         // PUT: api/Family/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
