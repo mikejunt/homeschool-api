@@ -58,6 +58,7 @@ namespace homeschool_api.Controllers
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Photo = user.Photo,
+                RelationId = relation.Id,
                 FamilyId = relation.FamilyId,
                 Role = relation.Role,
                 Confirmed = relation.Confirmed

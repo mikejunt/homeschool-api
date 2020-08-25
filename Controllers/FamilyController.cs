@@ -87,10 +87,10 @@ namespace homeschool_api.Controllers
             return query;
         }
 
-        // PUT: api/Family/5
+        // PUT: api/family/edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
+        [HttpPut("edit/{id}")]
         public async Task<IActionResult> PutFamily(int id, Family family)
         {
             if (id != family.Id)
@@ -119,10 +119,10 @@ namespace homeschool_api.Controllers
             return NoContent();
         }
 
-        // POST: api/Family
+        // POST: api/family/new
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
+        [HttpPost("new")]
         public async Task<ActionResult<Family>> PostFamily(Family family)
         {
             _context.Family.Add(family);
@@ -131,8 +131,8 @@ namespace homeschool_api.Controllers
             return CreatedAtAction("GetFamily", new { id = family.Id }, family);
         }
 
-        // DELETE: api/Family/5
-        [HttpDelete("{id}")]
+        // DELETE: api/family/5
+        [HttpDelete("delete/{id}")]
         public async Task<ActionResult<Family>> DeleteFamily(int id)
         {
             var family = await _context.Family.FindAsync(id);

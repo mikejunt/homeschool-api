@@ -33,6 +33,7 @@ namespace homeschool_api.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Photo { get; set; }
+        public int RelationId { get; set; }
         public int FamilyId { get; set; }
         public int Role { get; set; }
         public bool Confirmed { get; set; }
