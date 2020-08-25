@@ -37,10 +37,10 @@ namespace homeschool_api.Controllers
             obj => obj.Email == email)
             .ToListAsync();
 
-            if (query.Count() == 0)
-            {
-                return NoContent();
-            }
+            // if (query.Count() == 0)
+            // {
+            //     return NoContent();
+            // }
             return query;
         }
 
