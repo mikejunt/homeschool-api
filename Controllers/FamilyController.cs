@@ -131,7 +131,7 @@ namespace homeschool_api.Controllers
             return CreatedAtAction("GetFamily", new { id = family.Id }, family);
         }
 
-        // DELETE: api/family/5
+        // DELETE: api/family/delete/5
         [HttpDelete("delete/{id}")]
         public async Task<ActionResult<Family>> DeleteFamily(int id)
         {
