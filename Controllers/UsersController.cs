@@ -39,7 +39,7 @@ namespace homeschool_api.Controllers
 
             if (query.Count() == 0)
             {
-                return NotFound();
+                return NoContent();
             }
             return query;
         }
@@ -71,7 +71,7 @@ namespace homeschool_api.Controllers
 
             if (query.Count() == 0)
             {
-                return NotFound();
+                return NoContent();
             }
             return query;
         }
@@ -87,7 +87,7 @@ namespace homeschool_api.Controllers
 
             if (query.Count() == 0)
             {
-                return NotFound();
+                return NoContent();
             }
             return query;
         }
@@ -143,7 +143,7 @@ namespace homeschool_api.Controllers
             var users = await _context.Users.FindAsync(id);
             if (users == null)
             {
-                return NotFound();
+                return NoContent();
             }
 
             _context.Users.Remove(users);

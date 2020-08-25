@@ -37,7 +37,7 @@ namespace homeschool_api.Controllers
 
             if (query.Count() == 0)
             {
-                return NotFound();
+                return NoContent();
             }
 
             return query;
