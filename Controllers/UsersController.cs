@@ -37,10 +37,6 @@ namespace homeschool_api.Controllers
             obj => obj.Email == email)
             .ToListAsync();
 
-            // if (query.Count() == 0)
-            // {
-            //     return NoContent();
-            // }
             return query;
         }
 
@@ -69,10 +65,6 @@ namespace homeschool_api.Controllers
             .OrderBy(obj => obj.FamilyId)
             .ToListAsync();
 
-            if (query.Count() == 0)
-            {
-                return NoContent();
-            }
             return query;
         }
 
@@ -85,10 +77,6 @@ namespace homeschool_api.Controllers
             obj => obj.ParentEmail == email && obj.Minor == true)
             .ToListAsync();
 
-            if (query.Count() == 0)
-            {
-                return NoContent();
-            }
             return query;
         }
 

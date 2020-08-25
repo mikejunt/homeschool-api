@@ -50,10 +50,6 @@ namespace homeschool_api.Controllers
                         .OrderBy(obj => obj.Role)
                         .ToListAsync();
 
-            if (query.Count() == 0)
-            {
-                return NoContent();
-            }
             return query;
         }
 
@@ -80,10 +76,6 @@ namespace homeschool_api.Controllers
                         .OrderBy(obj => obj.UserId)
                         .ToListAsync();
 
-            if (query.Count() == 0)
-            {
-                return NoContent();
-            }
             return query;
         }
 
