@@ -107,11 +107,8 @@ namespace homeschool_api.Controllers
                     throw;
                 }
             }
-            var query = await _context.Users
-            .Where(obj => obj.Id == id)
-            .ToListAsync();
 
-            return query;
+            return NoContent();
         }
 
         // POST: api/users/new

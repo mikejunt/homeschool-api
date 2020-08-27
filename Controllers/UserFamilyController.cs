@@ -67,11 +67,7 @@ namespace homeschool_api.Controllers
                 }
             }
 
-            // var query = await _context.UserToFamily
-            // .Where(obj => obj.Id == id)
-            // .ToListAsync();
-
-            return userToFamily;
+            return NoContent();
         }
 
         // POST: api/relations/new
