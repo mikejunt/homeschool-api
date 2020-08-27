@@ -62,7 +62,7 @@ namespace homeschool_api.Controllers
             .Where(
             obj => fids.Contains(obj.FamilyId))
             .OrderBy(obj => obj.Role)
-            .OrderBy(obj => obj.FamilyId)
+            .ThenBy(obj => obj.FamilyId)
             .ToListAsync();
 
             return query;
